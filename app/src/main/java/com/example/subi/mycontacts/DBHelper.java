@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CONTACT_ADDRESS = "address";
     public static final String CONTACT_FAVORITE = "favorite";
 
-    public static final String[] CALL_COLUMNS = {TABLE_NAME, CONTACT_ID, CONTACT_FIRST_NAME, CONTACT_LAST_NAME,
+    public static final String[] CALL_COLUMNS = {CONTACT_ID, CONTACT_FIRST_NAME, CONTACT_LAST_NAME,
                                 CONTACT_PHONE_NUMBER, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_FAVORITE};
 
     //create SQL table

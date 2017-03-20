@@ -67,13 +67,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setTitle("My Contacts");
+        insertNote("subayyal", "mustafvi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
 
     }
 
-    private void insertNote(String fname, String lname, String phnum, String email, String address){
+    private void insertNote(String fname, String lname, String phnum, String email, String address, String bool){
         ContentValues values = new ContentValues();
         values.put(DBHelper.CONTACT_FIRST_NAME,fname);
         values.put(DBHelper.CONTACT_LAST_NAME, lname);
+        values.put(DBHelper.CONTACT_PHONE_NUMBER, phnum);
+        values.put(DBHelper.CONTACT_EMAIL, email);
+        values.put(DBHelper.CONTACT_ADDRESS, address);
+        values.put(DBHelper.CONTACT_FAVORITE, bool);
         Uri noteUri = getContentResolver().insert(ContactsProvider.CONTENT_URI,values);
         Log.d("MainActivity", "Inserted note " + noteUri.getLastPathSegment());
     }
