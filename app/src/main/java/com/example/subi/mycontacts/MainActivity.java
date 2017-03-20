@@ -1,5 +1,7 @@
 package com.example.subi.mycontacts;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setTitle("My Contacts");
+
+    }
+
+    private void insertNote(String fname, String lname, String phnum, String email, String address){
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.CONTACT_FIRST_NAME,fname);
+        values.put(DBHelper.CONTACT_LAST_NAME, lname);
+        Uri noteUri = getContentResolver().insert(ContactsProvider.CONTENT_URI,values);
+        Log.d("MainActivity", "Inserted note " + noteUri.getLastPathSegment());
     }
 
 
