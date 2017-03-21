@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("My Contacts");
         insertNote("subayyal", "mustafvi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
+        insertNote("ABC", "EFG", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "FALSE");
+        insertNote("Jimmy", "Bollard", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "FALSE");
+        insertNote("cristiano", "Ronaldo", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
+        insertNote("Leo", "Messi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
 
     }
 
