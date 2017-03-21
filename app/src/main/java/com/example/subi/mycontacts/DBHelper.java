@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Blob;
+
 //CREATE TABLE contacts ( _id INTEGER PRIMARY KEY AUTOINCREMENT, fname TEXT, lname TEXT, phnum TEXT, email TEXT, address TEXT, favorite BOOLEAN)
 
 /**
@@ -24,9 +26,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CONTACT_EMAIL = "email";
     public static final String CONTACT_ADDRESS = "address";
     public static final String CONTACT_FAVORITE = "favorite";
+    public static final String CONTACT_IMAGE = "image";
 
     public static final String[] CALL_COLUMNS = {CONTACT_ID, CONTACT_FIRST_NAME, CONTACT_LAST_NAME,
-                                CONTACT_PHONE_NUMBER, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_FAVORITE};
+                                CONTACT_PHONE_NUMBER, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_FAVORITE, CONTACT_IMAGE};
 
     //create SQL table
     private static final String TABLE_CREATE =
@@ -37,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
             CONTACT_PHONE_NUMBER + " TEXT, " +
             CONTACT_EMAIL + " TEXT, " +
             CONTACT_ADDRESS + " TEXT, " +
-            CONTACT_FAVORITE + " BOOLEAN" +
+            CONTACT_FAVORITE + " TEXT, " +
+            CONTACT_IMAGE + " BLOB" +
             ")";
 
     public DBHelper(Context context) {

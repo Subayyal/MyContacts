@@ -2,6 +2,7 @@ package com.example.subi.mycontacts;
 
 import android.content.ContentValues;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -66,16 +78,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        byte[] image = getImage("http://formsdotstar-c3l.s3.amazonaws.com/user-icon.png");
         setTitle("My Contacts");
-        insertNote("subayyal", "mustafvi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
-        insertNote("ABC", "EFG", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "FALSE");
-        insertNote("Jimmy", "Bollard", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "FALSE");
-        insertNote("cristiano", "Ronaldo", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
-        insertNote("Leo", "Messi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE");
+        insertNote("subayyal", "mustafvi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE", image);
+        insertNote("ABC", "EFG", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "FALSE", image);
+        insertNote("Jimmy", "Bollard", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "FALSE", image);
+        insertNote("cristiano", "Ronaldo", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE", image);
+        insertNote("Leo", "Messi", "1234234523", "s.m@hotmail.com", "123 street dallas texas", "TRUE", image);
 
     }
 
-    private void insertNote(String fname, String lname, String phnum, String email, String address, String bool){
+
+    private byte[] getImage(String url){
+        try{
+            URL imageUrl = new URL(url);
+            URLConnection ucon = imageUrl.openConnection();
+
+            InputStream is = ucon.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            //We create an array of bytes
+            byte[] data = new byte[50];
+            int current = 0;
+
+            while((current = bis.read(data,0,data.length)) != -1){
+                buffer.write(data,0,current);
+            }
+
+            FileOutputStream fos = new FileOutputStream(url);
+            fos.write(buffer.toByteArray());
+            fos.close();
+            return  buffer.toByteArray();
+        }catch (Exception e){
+            Log.d("ImageManager", "Error: " + e.toString());
+        }
+        return null;
+    }
+
+    private void insertNote(String fname, String lname, String phnum, String email, String address, String bool, byte[] image){
         ContentValues values = new ContentValues();
         values.put(DBHelper.CONTACT_FIRST_NAME,fname);
         values.put(DBHelper.CONTACT_LAST_NAME, lname);
@@ -83,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         values.put(DBHelper.CONTACT_EMAIL, email);
         values.put(DBHelper.CONTACT_ADDRESS, address);
         values.put(DBHelper.CONTACT_FAVORITE, bool);
+        values.put(DBHelper.CONTACT_IMAGE, image);
         Uri noteUri = getContentResolver().insert(ContactsProvider.CONTENT_URI,values);
         Log.d("MainActivity", "Inserted note " + noteUri.getLastPathSegment());
     }
