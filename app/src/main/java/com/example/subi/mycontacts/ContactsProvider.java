@@ -45,7 +45,7 @@ public class ContactsProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return database.query(DBHelper.TABLE_NAME,DBHelper.CALL_COLUMNS, selection, null, null, null, DBHelper.CONTACT_LAST_NAME + " DESC");
+        return database.query(DBHelper.TABLE_NAME,DBHelper.CALL_COLUMNS, selection, selectionArgs, null, null, DBHelper.CONTACT_LAST_NAME + " DESC");
     }
 
     @Nullable

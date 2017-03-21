@@ -32,13 +32,13 @@ public class ContactsTab extends Fragment implements LoaderManager.LoaderCallbac
 
         View rootView = inflater.inflate(R.layout.contacts_tab_main, container, false);
         String[] from = {DBHelper.CONTACT_FIRST_NAME};
-        int[] to = {android.R.id.text1};
-        cursorAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, null, from, to, 0);
+        int[] to = {R.id.contactTextView};
+        cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_contact_list, null, from, to, 0);
 
         ListView list = (ListView) rootView.findViewById(R.id.contactList);
         list.setAdapter(cursorAdapter);
 
-        getActivity().getSupportLoaderManager().initLoader(0, null, this);
+        getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
         return rootView;
     }
@@ -50,8 +50,11 @@ public class ContactsTab extends Fragment implements LoaderManager.LoaderCallbac
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-
-        cursorAdapter.swapCursor(cursor);
+        switch (loader.getId()){
+            case LOADER_ID:
+                cursorAdapter.swapCursor(cursor);
+                break;
+        }
     }
 
     @Override

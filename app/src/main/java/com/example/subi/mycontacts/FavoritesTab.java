@@ -31,14 +31,14 @@ public class FavoritesTab extends Fragment implements LoaderManager.LoaderCallba
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.favorites_tab_main, container, false);
 
-        /*String[] from = {DBHelper.CONTACT_FIRST_NAME, DBHelper.CONTACT_LAST_NAME};
+        String[] from = {DBHelper.CONTACT_FIRST_NAME, DBHelper.CONTACT_LAST_NAME};
         int[] to = {android.R.id.text1 };
         cursorAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, null, from, to, 0);
 
-        ListView list = (ListView) rootView.findViewById(R.id.contactList);
+        ListView list = (ListView) rootView.findViewById(R.id.contactFavList);
         list.setAdapter(cursorAdapter);
 
-        getActivity().getSupportLoaderManager().initLoader(1, null, this);*/
+        getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
         return rootView;
     }
@@ -48,18 +48,17 @@ public class FavoritesTab extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
-        /*String[] selectionArgs = {"TRUE"};
-        return new CursorLoader(getActivity(), ContactsProvider.CONTENT_URI, null, "favorite=?", selectionArgs,null);
-    */ return null;
+        String[] selectionArgs ={"TRUE"};
+        return new CursorLoader(getActivity(), ContactsProvider.CONTENT_URI, null, "favorite = ?", selectionArgs,null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        /*switch (loader.getId()){
+        switch (loader.getId()){
             case LOADER_ID:
                 cursorAdapter.swapCursor(cursor);
                 break;
-        }*/
+        }
     }
 
     @Override
